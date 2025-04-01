@@ -18,7 +18,7 @@ export default function Home() {
     },
   ];
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen bg-slate-300">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-slate-300">
       <ul className="mx-auto grid max-w-5xl grid-cols-2 items-start gap-4 p-6">
         {cardsData.map((card, i) => (
           <Card key={i} {...card} />
@@ -30,12 +30,25 @@ export default function Home() {
 
 function Card(props) {
   return (
-    <li className="overflow-hidden rounded-xl bg-white p-4 shadow-md ring-1 ring-black/5 transition hover:-translate-y-px hover:shadow-lg">
+    <li className="group overflow-hidden rounded-xl bg-white p-4 shadow-md ring-1 ring-black/5 transition hover:-translate-y-px hover:shadow-lg has-[img]:p-0">
       {props.image && <img src={props.image} alt="" className="mb-4" />}
-      <div className="grid gap-2">
-        {props.title && <h2 className="text-xl font-medium">{props.title}</h2>}
-        <p className="text-slate-700">{props.text}</p>
+      <div className="grid gap-2 group-has-[img]:p-4">
+        {props.title && (
+          <h2 className="text-xl font-medium group-not-[:has(img)]:text-2xl">
+            {props.title}
+          </h2>
+        )}
+        <p className="group-not-[:has(h2,img]:text-2xl/[1.4] text-slate-700">
+          {props.text}
+        </p>
       </div>
     </li>
   );
 }
+
+/* Brug en kombination af not-[:has()] og has-[] til at løse opgaven nedenfor.
+Style kortene forskelligt baseret på følgende betingelser:
+Kort uden både et billede og en overskrift skal have en justeret font-størrelse og linjehøjde for paragraf tekst.
+Kort uden billeder skal have en forøget font-størrelse for <h2>. not-[:has(h2,img)]:text-2xl 
+Kort med billeder skal have være “full-bleed”, men deres indhold skal matche padding’en fra de øvrige kort.
+*/

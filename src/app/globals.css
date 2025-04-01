@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @theme {
   --text-fluid-xs: var(--step--1);
   --text-fluid-sm: var(--step-0);
